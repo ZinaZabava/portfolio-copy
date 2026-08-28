@@ -32,10 +32,11 @@
   --line-gap: calc(var(--index-size) * (var(--index-leading) - 1));
   /* Blocks stay at least twice as open as the lines inside them */
   --block-gap: calc(var(--line-gap) * 2);
-  --text: #ffffff;
-  --text-muted: rgba(255, 255, 255, 0.72);
+  --text: #000000;
+  --text-muted: rgba(0, 0, 0, 0.72);
   --accent: #d2f096;
-  --about-bg: #000000;
+  --about-bg: #ffffff;
+  --border: rgba(0, 0, 0, 0.35);
   --font-mono: "forma-djr-mono", ui-monospace, monospace;
   --font-display: "PP Editorial New", Georgia, serif;
   --font-index: "Rene", "PP Editorial New", Georgia, serif;
@@ -57,6 +58,8 @@
 
 html {
   scroll-behavior: auto;
+  background: var(--about-bg);
+  color-scheme: light;
 }
 
 /* Avoid FOUT: keep page blank until fonts settle, then fade in */
@@ -89,7 +92,7 @@ html.fonts-loaded body {
 }
 
 /* ===================== Intro loader ===================== */
-/* Black from the first paint: body starts at opacity 0 for the font swap. */
+/* White from the first paint: body starts at opacity 0 for the font swap. */
 html.is-loading {
   background: var(--about-bg);
   /* clip stops the page moving under the loader without becoming the sticky
@@ -309,7 +312,7 @@ button {
   height: var(--stripe-height);
   min-height: 2.5em;
   padding: 12px 36px 0;
-  color: var(--accent);
+  color: var(--text);
   pointer-events: none;
   background: transparent;
 }
@@ -447,20 +450,20 @@ button {
   font-size: 28px;
   line-height: 1;
   letter-spacing: -0.12em;
-  color: var(--accent);
+  color: var(--text);
   text-decoration: none;
   white-space: nowrap;
   opacity: 0.5;
   transition: opacity 160ms ease;
   text-shadow:
-    0 0 18px rgba(0, 0, 0, 0.38),
-    0 0 40px rgba(0, 0, 0, 0.26),
-    0 0 72px rgba(0, 0, 0, 0.16),
-    0 0 120px rgba(0, 0, 0, 0.08);
+    0 0 18px rgba(255, 255, 255, 0.92),
+    0 0 40px rgba(255, 255, 255, 0.72),
+    0 0 72px rgba(255, 255, 255, 0.42),
+    0 0 120px rgba(255, 255, 255, 0.22);
 }
 
 .stripe__list-name {
-  color: var(--accent);
+  color: var(--text);
 }
 
 .stripe__list-meta {
@@ -517,7 +520,7 @@ button {
   line-height: normal;
   letter-spacing: 0;
   text-align: center;
-  color: #fff;
+  color: var(--text);
 }
 
 .site-footer__copy {
@@ -549,14 +552,14 @@ button {
 .about-table th,
 .about-table td {
   padding: 0.55em 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-top: 1px solid var(--border);
   vertical-align: baseline;
   text-align: left;
 }
 
 .about-table tr:last-child th,
 .about-table tr:last-child td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid var(--border);
 }
 
 .about-table th {
@@ -609,7 +612,7 @@ button {
   justify-content: center;
   margin: 0;
   padding: 8px;
-  color: var(--accent);
+  color: var(--text);
 }
 
 .site-footer__up svg {
@@ -707,7 +710,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   padding-left: max(24px, min(var(--intro-pad-x), calc((100% - var(--copy-width)) / 2)));
   padding-right: max(24px, min(var(--intro-pad-x), calc((100% - var(--copy-width)) / 2)));
   background: transparent;
-  color: #fff;
+  color: var(--text);
 }
 
 @media (max-height: 900px) {
@@ -733,7 +736,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   font-size: 30.36px;
   line-height: normal;
   letter-spacing: 0;
-  color: #fff;
+  color: var(--text);
 }
 
 .project__copy {
@@ -769,7 +772,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   line-height: var(--index-leading);
   letter-spacing: 0;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--text);
   gap: 16px;
 }
 
