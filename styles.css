@@ -111,8 +111,11 @@ html.js .loader {
   inset: 0;
   z-index: 999;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-rows: auto auto;
+  align-content: center;
+  align-items: start;
+  gap: var(--intro-gap);
   background: var(--about-bg);
   color: var(--text);
 }
@@ -120,9 +123,10 @@ html.js .loader {
 .loader__col {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 0;
-  padding: 0 16px;
+  padding: 0 36px;
+  grid-column: 1;
 }
 
 .loader__label,
@@ -134,7 +138,7 @@ html.js .loader {
   font-size: var(--mono-size);
   line-height: var(--index-leading);
   letter-spacing: 0;
-  text-align: center;
+  text-align: left;
   text-transform: uppercase;
   text-wrap: balance;
   color: var(--text);
@@ -151,7 +155,7 @@ html.js .loader {
   display: block;
   width: 100%;
   margin: 0;
-  text-align: center;
+  text-align: left;
   text-transform: uppercase;
   text-wrap: balance;
   will-change: transform, opacity;
@@ -484,13 +488,12 @@ button {
   position: relative;
   z-index: 50;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: var(--intro-pad-y)
-    max(24px, min(var(--intro-pad-x), calc((100% - var(--copy-width)) / 2)));
+  padding: var(--intro-pad-y) 0;
   background: transparent;
   color: var(--text);
 }
@@ -500,7 +503,9 @@ button {
   flex-direction: column;
   align-items: stretch;
   gap: var(--intro-gap);
-  width: min(var(--copy-width), 100%);
+  width: 33.333%;
+  padding: 0 24px 0 36px;
+  box-sizing: border-box;
 }
 
 .site-footer__title {
@@ -510,7 +515,7 @@ button {
   font-size: 30.36px;
   line-height: normal;
   letter-spacing: 0;
-  text-align: center;
+  text-align: left;
   color: var(--text);
 }
 
@@ -523,7 +528,7 @@ button {
   line-height: 1.5;
   letter-spacing: -0.12em;
   color: var(--text-muted);
-  text-align: justify;
+  text-align: left;
 }
 
 .site-footer__copy p {
@@ -631,6 +636,14 @@ button {
   background: transparent;
 }
 
+@media (min-width: 901px) {
+  .project__pin {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    align-items: start;
+  }
+}
+
 /* Sticky cover-scroll only when JS can drive the track (desktop/tablet) */
 html.js:not(.is-simple-scroll) .project__pin {
   position: sticky;
@@ -639,6 +652,20 @@ html.js:not(.is-simple-scroll) .project__pin {
   height: calc(100dvh - var(--topbar-height));
   overflow: hidden;
   transform: translateZ(0);
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+html.js:not(.is-simple-scroll) .project__intro,
+html.js:not(.is-simple-scroll) .project__track {
+  min-width: 0;
+  min-height: 0;
+}
+
+html.js:not(.is-simple-scroll) .project__intro {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 html.js.is-simple-scroll .project__pin {
@@ -690,18 +717,28 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
 .project__intro {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: var(--intro-gap);
   min-height: calc(100vh - var(--topbar-height));
   min-height: calc(100dvh - var(--topbar-height));
   padding-top: max(var(--intro-pad-y), var(--stripe-height));
   padding-bottom: var(--intro-pad-y);
-  /* Keep 720px copy; only tighten side padding when the projects column is narrower than Figma */
-  padding-left: max(24px, min(var(--intro-pad-x), calc((100% - var(--copy-width)) / 2)));
-  padding-right: max(24px, min(var(--intro-pad-x), calc((100% - var(--copy-width)) / 2)));
+  padding-left: 36px;
+  padding-right: 24px;
   background: transparent;
   color: var(--text);
+}
+
+@media (min-width: 901px) {
+  .project__intro {
+    min-height: 0;
+  }
+
+  html.js.is-simple-scroll .project__intro {
+    position: sticky;
+    top: var(--stripe-height);
+  }
 }
 
 @media (max-height: 900px) {
@@ -721,7 +758,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
 .project__title {
   margin: 0;
   max-width: 100%;
-  text-align: center;
+  text-align: left;
   font-family: var(--font-display);
   font-weight: 200;
   font-size: 30.36px;
@@ -732,7 +769,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
 
 .project__copy {
   margin: 0;
-  width: min(var(--copy-width), 100%);
+  width: 100%;
   max-width: 100%;
   font-family: var(--font-index);
   font-weight: 400;
@@ -740,7 +777,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   line-height: 1.5;
   letter-spacing: -0.12em;
   color: var(--text-muted);
-  text-align: justify;
+  text-align: left;
 }
 
 .project__copy p {
@@ -752,10 +789,10 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
 }
 
 .project__tags {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: baseline;
-  width: min(var(--copy-width), 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
   max-width: 100%;
   font-family: var(--font-mono);
   font-weight: var(--mono-weight);
@@ -764,11 +801,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   letter-spacing: 0;
   text-transform: uppercase;
   color: var(--text);
-  gap: 16px;
-}
-
-.project__tags span:last-child {
-  text-align: right;
+  gap: 0;
 }
 
 /* Frames: vertical = 1× wide, horizontal = 2× wide, same row height. Images clip. */
@@ -777,8 +810,8 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: stretch;
   gap: 0;
-  width: min(var(--media-width), 100%);
-  margin-inline: auto;
+  width: 100%;
+  margin-inline: 0;
   overflow: hidden;
   background: transparent;
   font-size: 0;
@@ -1122,7 +1155,11 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     gap: var(--intro-gap);
     padding-top: max(72px, calc(var(--stripe-height) + 16px));
     padding-bottom: 72px;
+    padding-left: 20px;
+    padding-right: 20px;
     min-height: 0;
+    position: relative;
+    top: auto;
   }
 
   .projects-window > .project:first-child .project__intro {
@@ -1158,6 +1195,7 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   .site-footer__inner {
     align-items: stretch;
     width: 100%;
+    padding: 0;
   }
 
   .site-footer__title {
