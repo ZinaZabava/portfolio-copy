@@ -1056,10 +1056,9 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     width: 100%;
   }
 
-  html.js.is-simple-scroll .project__pin {
+  html.js.is-simple-scroll.is-ready .project__pin {
     position: sticky;
-    top: calc(100vh - 100%);
-    top: calc(100dvh - 100%);
+    top: var(--pin-stick-top, 0px);
     height: auto;
     overflow: visible;
     transform: none;

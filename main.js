@@ -188,21 +188,25 @@
       if (!useCoverScroll()) {
         item.section.style.height = "";
         item.scrollRange = 0;
+        if (item.pin) item.pin.style.removeProperty("--pin-stick-top");
         return;
       }
 
       if (!usePinnedScroll()) {
-        // Mobile: text then images in flow. Extra viewport lets the next
-        // project cover after this one's content has been read.
+        // Mobile: text then images in flow. Stick the last viewport of this
+        // project, then give one extra screen so the next can cover it.
         item.scrollRange = 0;
-        const contentHeight = item.pin
-          ? item.pin.offsetHeight
-          : item.section.offsetHeight;
-        const aboutGap =
-          item === state[state.length - 1] ? 80 : 0;
-        item.section.style.height = `${contentHeight + vh + aboutGap}px`;
+        if (item.pin) {
+          const contentHeight = item.pin.offsetHeight;
+          const stickTop = Math.min(0, vh - contentHeight);
+          item.pin.style.setProperty("--pin-stick-top", `${stickTop}px`);
+          const aboutGap = item === state[state.length - 1] ? 80 : 0;
+          item.section.style.height = `${contentHeight + vh + aboutGap}px`;
+        }
         return;
       }
+
+      if (item.pin) item.pin.style.removeProperty("--pin-stick-top");
 
       const contentHeight = item.track.scrollHeight;
       const viewH = item.track.clientHeight || vh;
@@ -793,6 +797,9 @@
   if ("ResizeObserver" in window) {
     const ro = new ResizeObserver(scheduleMeasure);
     media.forEach((el) => ro.observe(el));
+    state.forEach((item) => {
+      if (item.pin) ro.observe(item.pin);
+    });
   }
 
   // First measure uses intrinsic width/height placeholders so project
