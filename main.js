@@ -213,6 +213,7 @@
       }
 
       if (item.pin) item.pin.style.removeProperty("--pin-stick-top");
+      document.documentElement.style.removeProperty("--cover-pull");
 
       const contentHeight = item.track.scrollHeight;
       const viewH = item.track.clientHeight || vh;
