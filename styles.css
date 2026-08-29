@@ -47,7 +47,12 @@
   --intro-pad-x: 180px;
   --intro-gap: 59px;
   --mono-weight: 400; /* Forma DJR Mono Regular */
+  --mono-light: 300; /* Forma DJR Mono Light */
   --mono-size: 18px; /* match project tags (Commercial, Academic, …) */
+  --name-size: 28px;
+  --project-title-size: calc(var(--name-size) * 1.5);
+  --name-to-title: 269px;
+  --stripe-pad-top: 12px;
 }
 
 *,
@@ -306,7 +311,7 @@ button {
   z-index: 300;
   height: var(--stripe-height);
   min-height: 2.5em;
-  padding: 12px 36px 0;
+  padding: var(--stripe-pad-top) 36px 0;
   color: var(--text);
   pointer-events: none;
   background: transparent;
@@ -329,7 +334,7 @@ button {
   pointer-events: auto;
   font-family: var(--font-display);
   font-weight: 200;
-  font-size: 28px;
+  font-size: var(--name-size);
   line-height: 1;
   letter-spacing: 0;
   text-transform: capitalize;
@@ -741,6 +746,10 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
 @media (min-width: 901px) {
   .project__intro {
     min-height: 0;
+    padding-top: calc(
+      var(--stripe-pad-top) + var(--name-size) + var(--name-to-title)
+    );
+    padding-bottom: 36px;
   }
 
   html.js.is-simple-scroll .project__intro {
@@ -769,8 +778,8 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   text-align: left;
   font-family: var(--font-display);
   font-weight: 200;
-  font-size: 30.36px;
-  line-height: normal;
+  font-size: var(--project-title-size);
+  line-height: 1;
   letter-spacing: 0;
   color: var(--text);
 }
@@ -779,12 +788,12 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   margin: 0;
   width: 100%;
   max-width: 100%;
-  font-family: var(--font-index);
-  font-weight: 400;
-  font-size: 22px;
+  font-family: var(--font-mono);
+  font-weight: var(--mono-light);
+  font-size: 19px;
   line-height: 1.5;
-  letter-spacing: -0.12em;
-  color: var(--text-muted);
+  letter-spacing: 0;
+  color: var(--text);
   text-align: left;
 }
 
@@ -798,10 +807,13 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
 
 .project__tags {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: flex-start;
   width: 100%;
   max-width: 100%;
+  margin-top: auto;
   font-family: var(--font-mono);
   font-weight: var(--mono-weight);
   font-size: var(--mono-size);
@@ -809,7 +821,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   letter-spacing: 0;
   text-transform: uppercase;
   color: var(--text);
-  gap: 0;
+  gap: 1.25em;
 }
 
 /* Frames: vertical = 1× wide, horizontal = 2× wide, same row height. Images clip. */
@@ -955,15 +967,6 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   :root {
     --intro-pad-y: 80px;
     --intro-gap: 40px;
-  }
-
-  .project__title {
-    font-size: 26px;
-  }
-
-  .project__copy {
-    font-size: 18px;
-    line-height: 1.5;
   }
 }
 
@@ -1177,7 +1180,6 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
 
   .project__title {
     text-align: left;
-    font-size: 28px;
     line-height: 1;
   }
 
@@ -1187,6 +1189,7 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
 
   .project__tags {
     width: 100%;
+    margin-top: 0;
   }
 
   .project + .project {
