@@ -245,7 +245,23 @@
       }
     });
 
-    if (!pinned) {
+    if (pinned) {
+      const vh = viewportHeight();
+      state.forEach((item, i) => {
+        if (!item.pin) return;
+        const next = state[i + 1];
+        const nextTop = next
+          ? next.section.getBoundingClientRect().top
+          : about
+            ? about.getBoundingClientRect().top
+            : Infinity;
+        const cover = Math.min(
+          1,
+          Math.max(0, (vh - (nextTop - offset)) / vh)
+        );
+        item.pin.style.opacity = String(1 - cover * 0.4);
+      });
+    } else {
       state.forEach((item) => {
         if (item.pin) item.pin.style.opacity = "";
       });
