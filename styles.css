@@ -485,6 +485,20 @@ html.is-nav-open .stripe__menu {
   background: var(--about-bg);
   color: var(--text);
   overflow: hidden;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+html.js:not(.is-simple-scroll) .site-footer {
+  transition:
+    border-top-left-radius 0.55s ease,
+    border-top-right-radius 0.55s ease;
+}
+
+html.js:not(.is-simple-scroll) .site-footer.is-arriving {
+  border-top-left-radius: 36px;
+  border-top-right-radius: 36px;
+  transition: none;
 }
 
 .site-footer__inner {
@@ -659,6 +673,15 @@ html.js:not(.is-simple-scroll) .project__pin {
   background: var(--project-bg, var(--about-bg));
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+  transition:
+    border-top-left-radius 0.55s ease,
+    border-top-right-radius 0.55s ease;
+}
+
+html.js:not(.is-simple-scroll) .project__pin.is-arriving {
+  border-top-left-radius: 36px;
+  border-top-right-radius: 36px;
+  transition: none;
 }
 
 html.js:not(.is-simple-scroll) .project__intro,
