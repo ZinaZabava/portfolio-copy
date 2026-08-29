@@ -51,7 +51,6 @@
   --mono-size: 18px; /* match project tags (Commercial, Academic, …) */
   --name-size: 28px;
   --project-title-size: calc(var(--name-size) * 1.5);
-  --name-to-title: 269px;
   --stripe-pad-top: 12px;
 }
 
@@ -746,10 +745,12 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
 @media (min-width: 901px) {
   .project__intro {
     min-height: 0;
-    padding-top: calc(
-      var(--stripe-pad-top) + var(--name-size) + var(--name-to-title)
-    );
     padding-bottom: 36px;
+  }
+
+  html.js:not(.is-simple-scroll) .project__intro {
+    padding-top: calc((100vh - var(--topbar-height)) / 3);
+    padding-top: calc((100dvh - var(--topbar-height)) / 3);
   }
 
   html.js.is-simple-scroll .project__intro {
