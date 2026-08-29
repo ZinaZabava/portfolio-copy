@@ -84,10 +84,17 @@
       ? document.fonts.ready
       : Promise.resolve();
 
+  function lockRoleWidth() {
+    const first = role.querySelector(".is-in");
+    if (!first) return;
+    role.style.width = `${Math.ceil(first.getBoundingClientRect().width)}px`;
+  }
+
   let scheduled = false;
   async function start() {
     if (scheduled) return;
     scheduled = true;
+    lockRoleWidth();
 
     if (reducedMotion) {
       await wait(HOLD);

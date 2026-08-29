@@ -118,7 +118,7 @@ html.js .loader {
 .loader__col {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex: 0 0 auto;
   min-width: 0;
   padding: 0;
@@ -137,7 +137,7 @@ html.js .loader {
   font-size: var(--mono-size);
   line-height: var(--index-leading);
   letter-spacing: 0;
-  text-align: center;
+  text-align: left;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--text);
@@ -145,16 +145,18 @@ html.js .loader {
 
 .loader__role {
   position: relative;
-  overflow: hidden;
+  overflow-x: visible;
+  overflow-y: hidden;
+  flex: 0 0 auto;
   width: auto;
-  min-width: 12ch;
+  min-width: 0;
   min-height: 1.5em;
   text-align: left;
 }
 
 .loader__role-line {
   display: block;
-  width: 100%;
+  width: max-content;
   margin: 0;
   text-align: left;
   text-transform: uppercase;
@@ -168,7 +170,6 @@ html.js .loader {
 .loader__role-line.is-prep {
   position: absolute;
   left: 0;
-  right: 0;
   top: 0;
   visibility: hidden;
 }
@@ -176,7 +177,6 @@ html.js .loader {
 .loader__role-line.is-from-below {
   position: absolute;
   left: 0;
-  right: 0;
   top: 0;
   opacity: 1;
   transform: translate3d(0, 100%, 0);
@@ -192,7 +192,6 @@ html.js .loader {
 .loader__role-line.is-to-above {
   position: absolute;
   left: 0;
-  right: 0;
   top: 0;
   opacity: 0;
   transform: translate3d(0, -100%, 0);
