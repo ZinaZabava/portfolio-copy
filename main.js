@@ -136,6 +136,10 @@
   const coarseMq = window.matchMedia("(hover: none) and (pointer: coarse)");
 
   function usePinnedScroll() {
+    return !reducedMotion && !narrowMq.matches;
+  }
+
+  function useCoverScroll() {
     return !reducedMotion;
   }
 
@@ -181,21 +185,29 @@
       item.track.style.transform = "";
       item.track.style.paddingBottom = "0px";
 
-      if (!usePinnedScroll()) {
-        // Mobile / reduced-motion: natural document height, all media visible
+      if (!useCoverScroll()) {
         item.section.style.height = "";
         item.scrollRange = 0;
+        return;
+      }
+
+      if (!usePinnedScroll()) {
+        // Mobile: text then images in flow. Extra viewport lets the next
+        // project cover after this one's content has been read.
+        item.scrollRange = 0;
+        const contentHeight = item.pin
+          ? item.pin.offsetHeight
+          : item.section.offsetHeight;
+        const aboutGap =
+          item === state[state.length - 1] ? 80 : 0;
+        item.section.style.height = `${contentHeight + vh + aboutGap}px`;
         return;
       }
 
       const contentHeight = item.track.scrollHeight;
       const viewH = item.track.clientHeight || vh;
       item.scrollRange = Math.max(0, contentHeight - viewH);
-      // Extra viewport lets the next project slide up and cover this one
-      // while the pin stays stuck (paired with a negative margin on the next).
-      const aboutGap =
-        item === state[state.length - 1] && narrowMq.matches ? 80 : 0;
-      item.section.style.height = `${item.scrollRange + 2 * vh + aboutGap}px`;
+      item.section.style.height = `${item.scrollRange + 2 * vh}px`;
     });
 
     document.documentElement.classList.add("is-ready");
@@ -225,6 +237,7 @@
     );
     const offset = Number.isFinite(topbar) ? topbar : 0;
     const pinned = usePinnedScroll();
+    const cover = useCoverScroll();
     // Focus line just below the top bar / upper viewport — active project is
     // the last one whose top has crossed this line (never jumps back to first).
     const focusY = offset + Math.min(96, window.innerHeight * 0.18);
@@ -245,7 +258,7 @@
       }
     });
 
-    if (pinned) {
+    if (cover) {
       const vh = viewportHeight();
       state.forEach((item, i) => {
         if (!item.pin) return;
@@ -255,12 +268,12 @@
           : about
             ? about.getBoundingClientRect().top
             : Infinity;
-        const cover = Math.min(
+        const coverAmt = Math.min(
           1,
           Math.max(0, (vh - (nextTop - offset)) / vh)
         );
         item.pin.style.filter =
-          cover > 0 ? `blur(${(cover * 12).toFixed(2)}px)` : "";
+          pinned && coverAmt > 0 ? `blur(${(coverAmt * 12).toFixed(2)}px)` : "";
 
         const pinTop = item.pin.getBoundingClientRect().top - offset;
         item.pin.classList.toggle("is-arriving", pinTop > 1);

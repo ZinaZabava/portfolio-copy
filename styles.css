@@ -484,13 +484,13 @@ html.is-nav-open .stripe__menu {
   border-top-right-radius: 0;
 }
 
-html.js:not(.is-simple-scroll) .site-footer {
+html.js:not(.is-reduced-motion) .site-footer {
   transition:
     border-top-left-radius 0.55s ease,
     border-top-right-radius 0.55s ease;
 }
 
-html.js:not(.is-simple-scroll) .site-footer.is-arriving {
+html.js:not(.is-reduced-motion) .site-footer.is-arriving {
   border-top-left-radius: 36px;
   border-top-right-radius: 36px;
   transition: none;
@@ -630,12 +630,12 @@ html.js:not(.is-simple-scroll) .site-footer.is-arriving {
   isolation: isolate;
 }
 
-html.js:not(.is-simple-scroll):not(.is-ready) .site-footer {
+html.js:not(.is-reduced-motion):not(.is-ready) .site-footer {
   visibility: hidden;
 }
 
-html.js:not(.is-simple-scroll).is-ready .project + .project,
-html.js:not(.is-simple-scroll).is-ready .projects-window + .site-footer {
+html.js:not(.is-reduced-motion).is-ready .project + .project,
+html.js:not(.is-reduced-motion).is-ready .projects-window + .site-footer {
   margin-top: calc(-100vh + var(--topbar-height));
   margin-top: calc(-100dvh + var(--topbar-height));
 }
@@ -697,10 +697,7 @@ html.js.is-simple-scroll .project__pin {
   height: auto;
   overflow: visible;
   transform: none;
-}
-
-html.js.is-simple-scroll .project {
-  height: auto !important;
+  background: var(--project-bg, var(--about-bg));
 }
 
 html.js.is-simple-scroll .project__track {
@@ -1054,39 +1051,25 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     width: 100%;
   }
 
-  html.js:not(.is-simple-scroll) .project__pin {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    position: sticky;
-    top: var(--topbar-height);
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
-  }
-
-  html.js:not(.is-simple-scroll) .project__intro {
-    height: auto;
-    max-height: 46%;
-    flex: 0 1 auto;
-    overflow-y: auto;
-  }
-
-  html.js:not(.is-simple-scroll) .project__track {
-    flex: 1 1 auto;
-    min-height: 0;
-  }
-
   html.js.is-simple-scroll .project__pin {
-    position: relative;
-    top: auto;
+    position: sticky;
+    top: calc(100vh - 100%);
+    top: calc(100dvh - 100%);
     height: auto;
     overflow: visible;
     transform: none;
+    background: var(--project-bg, var(--about-bg));
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    transition:
+      border-top-left-radius 0.55s ease,
+      border-top-right-radius 0.55s ease;
   }
 
-  html.js.is-simple-scroll .project {
-    height: auto !important;
+  html.js.is-simple-scroll .project__pin.is-arriving {
+    border-top-left-radius: 36px;
+    border-top-right-radius: 36px;
+    transition: none;
   }
 
   html.js.is-simple-scroll .project__track {
@@ -1172,8 +1155,8 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     margin-top: 0;
   }
 
-  html.js.is-simple-scroll .project + .project,
-  html.js.is-simple-scroll .projects-window + .site-footer {
+  html.js.is-reduced-motion .project + .project,
+  html.js.is-reduced-motion .projects-window + .site-footer {
     margin-top: 80px;
   }
 

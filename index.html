@@ -28,7 +28,10 @@
         window.scrollTo(0, 0);
       } catch (e) {}
       try {
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if (
+          window.matchMedia("(max-width: 900px)").matches ||
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ) {
           html.className += " is-simple-scroll";
         }
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -48,7 +51,7 @@
   />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="https://use.typekit.net/cte3nym.css" />
-  <link rel="stylesheet" href="styles.css?v=250829mob" />
+  <link rel="stylesheet" href="styles.css?v=250829mfx" />
   <script>
     /* Reveal once webfonts are ready (or after a short timeout). */
     (function () {
@@ -582,6 +585,6 @@
     </footer>
   </div>
 
-  <script src="main.js?v=250829mob"></script>
+  <script src="main.js?v=250829mfx"></script>
 </body>
 </html>
