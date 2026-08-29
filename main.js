@@ -359,7 +359,7 @@
       name.className = "stripe__list-name";
       name.textContent = section.dataset.label || section.dataset.project;
       meta.className = "stripe__list-meta";
-      if (type) meta.textContent = ` | ${type}`;
+      if (type) meta.textContent = type;
       link.append(name, meta);
       link.addEventListener("click", (event) => {
         event.preventDefault();

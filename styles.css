@@ -109,8 +109,7 @@ html.js .loader {
   align-items: start;
   font-size: var(--mono-size);
   line-height: var(--index-leading);
-  row-gap: calc(2 * var(--mono-size) * var(--index-leading));
-  row-gap: 2lh;
+  row-gap: 18px;
   column-gap: 0;
   background: var(--accent);
   color: var(--text);
@@ -413,7 +412,10 @@ button {
 }
 
 .stripe__list a {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4em 0.75em;
   font-family: var(--font-display);
   font-weight: 200;
   font-size: var(--name-size);
@@ -472,12 +474,12 @@ html.is-nav-open .stripe__menu {
   position: relative;
   z-index: 50;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: var(--intro-pad-y) 0;
+  padding: 36px;
   background: var(--about-bg);
   color: var(--text);
 }
@@ -488,7 +490,8 @@ html.is-nav-open .stripe__menu {
   align-items: stretch;
   gap: var(--intro-gap);
   width: 33.333%;
-  padding: 0 24px 0 36px;
+  max-width: 100%;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -499,7 +502,7 @@ html.is-nav-open .stripe__menu {
   font-size: var(--project-title-size);
   line-height: 1;
   letter-spacing: 0;
-  text-align: left;
+  text-align: center;
   color: var(--text);
 }
 
@@ -741,25 +744,6 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
 
   .stripe__list a {
     white-space: normal;
-  }
-
-  .site-footer {
-    padding: 0;
-    align-items: stretch;
-  }
-
-  .site-footer__inner {
-    min-height: 100vh;
-    min-height: 100dvh;
-    padding-top: calc((100vh - var(--topbar-height)) / 3);
-    padding-top: calc((100dvh - var(--topbar-height)) / 3);
-    padding-bottom: 36px;
-    padding-left: 36px;
-    padding-right: 48px;
-  }
-
-  .about-table {
-    margin-top: auto;
   }
 
   .project__intro {
@@ -1146,36 +1130,15 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   }
 
   .site-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    min-height: 0;
-    padding: 152px 20px 48px;
+    padding: 80px 20px;
   }
 
   .site-footer__inner {
-    align-items: stretch;
     width: 100%;
-    padding: 0;
-  }
-
-  .site-footer__title {
-    text-align: left;
-  }
-
-  .site-footer__copy {
-    text-align: left;
   }
 
   .about-table th {
     width: 34%;
-  }
-
-  .site-footer__up {
-    position: static;
-    align-self: flex-end;
-    margin-top: 48px;
-    right: auto;
-    bottom: auto;
   }
 }
 
