@@ -13,7 +13,7 @@
   --about-width: 0px;
   --topbar-height: 0px;
   --stripe-height: 6vh;
-  --stripe-green: #d2f096;
+  --stripe-green: #98b0f1;
   --gap: 0px;
   --index-size: 22px;
   --index-leading: 1.5;
@@ -23,7 +23,7 @@
   --block-gap: calc(var(--line-gap) * 2);
   --text: #000000;
   --text-muted: rgba(0, 0, 0, 0.72);
-  --accent: #d2f096;
+  --accent: #98b0f1;
   --about-bg: #ffffff;
   --border: rgba(0, 0, 0, 0.35);
   --font-mono: "forma-djr-mono", ui-monospace, monospace;
@@ -86,7 +86,7 @@ html.fonts-loaded body {
 /* ===================== Intro loader ===================== */
 /* White from the first paint: body starts at opacity 0 for the font swap. */
 html.is-loading {
-  background: var(--about-bg);
+  background: var(--accent);
   /* clip stops the page moving under the loader without becoming the sticky
      containing block. hidden on html is what made Safari pin each project to
      one black viewport frame and hide the images underneath. */
@@ -108,7 +108,7 @@ html.js .loader {
   align-content: center;
   align-items: start;
   gap: var(--intro-gap);
-  background: var(--about-bg);
+  background: var(--accent);
   color: var(--text);
 }
 
