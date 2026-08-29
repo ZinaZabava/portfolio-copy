@@ -136,7 +136,7 @@
   const coarseMq = window.matchMedia("(hover: none) and (pointer: coarse)");
 
   function usePinnedScroll() {
-    return !reducedMotion && !narrowMq.matches && !coarseMq.matches;
+    return !reducedMotion;
   }
 
   function syncScrollMode() {
@@ -189,10 +189,13 @@
       }
 
       const contentHeight = item.track.scrollHeight;
-      item.scrollRange = Math.max(0, contentHeight - vh);
+      const viewH = item.track.clientHeight || vh;
+      item.scrollRange = Math.max(0, contentHeight - viewH);
       // Extra viewport lets the next project slide up and cover this one
       // while the pin stays stuck (paired with a negative margin on the next).
-      item.section.style.height = `${item.scrollRange + 2 * vh}px`;
+      const aboutGap =
+        item === state[state.length - 1] && narrowMq.matches ? 80 : 0;
+      item.section.style.height = `${item.scrollRange + 2 * vh + aboutGap}px`;
     });
 
     document.documentElement.classList.add("is-ready");

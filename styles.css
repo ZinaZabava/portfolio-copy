@@ -1041,7 +1041,7 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   }
 
   .stripe__list {
-    padding: 72px 20px 40px;
+    padding: calc(var(--stripe-height) + 20px) 20px 40px;
   }
 
   .stripe__list a {
@@ -1054,10 +1054,30 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     width: 100%;
   }
 
-  /* Mobile: normal flow so every image is reachable by scrolling.
-     Beat the desktop sticky pin even if is-simple-scroll was missed. */
-  html.js .project__pin,
   html.js:not(.is-simple-scroll) .project__pin {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: sticky;
+    top: var(--topbar-height);
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  html.js:not(.is-simple-scroll) .project__intro {
+    height: auto;
+    max-height: 46%;
+    flex: 0 1 auto;
+    overflow-y: auto;
+  }
+
+  html.js:not(.is-simple-scroll) .project__track {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  html.js.is-simple-scroll .project__pin {
     position: relative;
     top: auto;
     height: auto;
@@ -1065,12 +1085,11 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     transform: none;
   }
 
-  html.js .project,
-  html.js:not(.is-simple-scroll) .project {
+  html.js.is-simple-scroll .project {
     height: auto !important;
   }
 
-  .project__track {
+  html.js.is-simple-scroll .project__track {
     transform: none !important;
     will-change: auto;
   }
@@ -1125,8 +1144,8 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   .project__intro {
     align-items: flex-start;
     gap: var(--intro-gap);
-    padding-top: max(72px, calc(var(--stripe-height) + 16px));
-    padding-bottom: 72px;
+    padding-top: calc(var(--stripe-height) + 16px);
+    padding-bottom: 24px;
     padding-left: 20px;
     padding-right: 20px;
     min-height: 0;
@@ -1134,7 +1153,7 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     top: auto;
   }
 
-  .projects-window > .project:first-child .project__intro {
+  html.js.is-simple-scroll .projects-window > .project:first-child .project__intro {
     padding-top: 33vh;
     padding-top: 33dvh;
   }
@@ -1153,20 +1172,40 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     margin-top: 0;
   }
 
-  .project + .project {
+  html.js.is-simple-scroll .project + .project,
+  html.js.is-simple-scroll .projects-window + .site-footer {
     margin-top: 80px;
   }
 
   .site-footer {
-    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: calc(var(--stripe-height) + 24px) 20px 48px;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   .site-footer__inner {
     width: 100%;
+    grid-row: auto;
+  }
+
+  .site-footer__title {
+    text-align: left;
+  }
+
+  .site-footer__copy {
+    text-align: left;
   }
 
   .about-table th {
     width: 34%;
+  }
+
+  .site-footer a.site-footer__up {
+    display: none;
   }
 }
 
@@ -1177,6 +1216,11 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
 
   .stripe {
     padding: 14px 16px 0;
+  }
+
+  .stripe__list {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .project__intro {
