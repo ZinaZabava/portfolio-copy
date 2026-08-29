@@ -1004,7 +1004,7 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   :root {
     --about-width: 0px;
     --topbar-height: 0px;
-    --stripe-height: 7.3vh;
+    --stripe-height: 50px;
     --intro-pad-y: 56px;
     --intro-pad-x: 20px;
     --intro-gap: 32px;
@@ -1131,7 +1131,7 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   .project__intro {
     align-items: flex-start;
     gap: var(--intro-gap);
-    padding-top: calc(var(--stripe-height) + 16px);
+    padding-top: calc(var(--stripe-height) + 20px);
     padding-bottom: 24px;
     padding-left: 20px;
     padding-right: 20px;
@@ -1141,24 +1141,26 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   }
 
   html.js.is-simple-scroll .projects-window > .project:first-child .project__intro {
-    padding-top: 33vh;
-    padding-top: 33dvh;
+    padding-top: calc(var(--stripe-height) + 20px);
   }
 
   .project__title {
+    order: 1;
     text-align: left;
     line-height: 1;
-    margin-top: -1lh;
-    margin-bottom: 1lh;
-  }
-
-  .project__copy {
-    text-align: left;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .project__tags {
+    order: 2;
     width: 100%;
     margin-top: 0;
+  }
+
+  .project__copy {
+    order: 3;
+    text-align: left;
   }
 
   html.js.is-reduced-motion .project + .project,
@@ -1214,7 +1216,7 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
 
 @media (max-width: 560px) {
   :root {
-    --stripe-height: 8vh;
+    --stripe-height: 54px;
   }
 
   .stripe {
@@ -1226,7 +1228,9 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     padding-right: 16px;
   }
 
-  .project__intro {
+  .project__intro,
+  html.js.is-simple-scroll .projects-window > .project:first-child .project__intro {
+    padding-top: calc(var(--stripe-height) + 16px);
     padding-left: 16px;
     padding-right: 16px;
   }
