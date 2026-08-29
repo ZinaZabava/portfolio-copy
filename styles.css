@@ -9,17 +9,6 @@
   font-display: block;
 }
 
-@font-face {
-  font-family: "Rene";
-  src:
-    url("assets/fonts/Rene-Regular.woff2") format("woff2"),
-    url("assets/fonts/Rene-Regular.woff") format("woff"),
-    url("assets/fonts/FATRene-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
-
 :root {
   --about-width: 0px;
   --topbar-height: 0px;
@@ -39,7 +28,6 @@
   --border: rgba(0, 0, 0, 0.35);
   --font-mono: "forma-djr-mono", ui-monospace, monospace;
   --font-display: "PP Editorial New", Georgia, serif;
-  --font-index: "Rene", "PP Editorial New", Georgia, serif;
   /* Project copy stays Figma width on wide screens — does not shrink as viewport grows */
   --copy-width: 720px;
   --media-width: 1000px;
@@ -298,7 +286,7 @@ button {
   background: transparent;
 }
 
-/* ——— Top stripe: name + current project ——— */
+/* ——— Top stripe: name + burger ——— */
 .stripe {
   display: flex;
   flex-direction: column;
@@ -319,7 +307,7 @@ button {
 .stripe__row {
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 24px;
   width: 100%;
@@ -345,24 +333,24 @@ button {
 .stripe__nav {
   position: relative;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: flex-end;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
   margin: 0;
   pointer-events: auto;
-  text-align: right;
 }
 
 .stripe__menu {
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex: 0 0 auto;
   width: 26px;
   height: 16px;
   margin: 0;
-  padding: 0;
+  padding: 12px;
+  box-sizing: content-box;
   border: 0;
   background: none;
   appearance: none;
@@ -370,6 +358,8 @@ button {
   cursor: pointer;
   color: inherit;
   pointer-events: auto;
+  position: relative;
+  z-index: 2;
 }
 
 .stripe__menu-bar {
@@ -378,95 +368,72 @@ button {
   height: 2px;
   background: currentColor;
   border-radius: 0;
+  transform-origin: center;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
 }
 
-.stripe__current-text {
-  display: block;
-  flex: 1 1 auto;
-  width: auto;
-  min-width: 0;
-  max-width: 58%;
-  margin: 0 0 0 auto;
-  padding: 0;
-  border: 0;
-  background: none;
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-  min-height: 0;
-  overflow: visible;
-  white-space: nowrap;
-  font-family: var(--font-index);
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 1;
-  letter-spacing: -0.12em;
-  color: inherit;
-  text-align: right;
-  pointer-events: auto;
+.stripe__nav.is-open .stripe__menu-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
 }
 
-.stripe__current-text::before {
-  content: "y";
-  font-family: var(--font-display);
-  font-weight: 200;
-  font-size: 28px;
-  letter-spacing: 0;
-  line-height: 1;
-  visibility: hidden;
-  display: inline-block;
-  width: 0;
-  overflow: hidden;
-  vertical-align: baseline;
-  pointer-events: none;
+.stripe__nav.is-open .stripe__menu-bar:nth-child(2) {
+  opacity: 0;
 }
 
-.stripe__current-label {
-  display: inline;
-  vertical-align: baseline;
+.stripe__nav.is-open .stripe__menu-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .stripe__list {
   display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.38em;
-  margin: 0;
-  padding: 0 0 20px 0;
-  list-style: none;
+  position: fixed;
+  inset: 0;
   z-index: 1;
-  background: transparent;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 11px;
+  margin: 0;
+  padding: calc(var(--stripe-height) + 24px) 36px 40px;
+  list-style: none;
+  background: var(--accent);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   pointer-events: auto;
+}
+
+.stripe__nav.is-open .stripe__list {
+  display: flex;
 }
 
 .stripe__list a {
   display: block;
-  font-family: var(--font-index);
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 1;
-  letter-spacing: -0.12em;
-  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 200;
+  font-size: var(--name-size);
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: #000000;
   text-decoration: none;
   white-space: nowrap;
-  opacity: 0.5;
+  text-align: left;
+  opacity: 0.45;
   transition: opacity 160ms ease;
-  text-shadow:
-    0 0 18px rgba(255, 255, 255, 0.92),
-    0 0 40px rgba(255, 255, 255, 0.72),
-    0 0 72px rgba(255, 255, 255, 0.42),
-    0 0 120px rgba(255, 255, 255, 0.22);
 }
 
 .stripe__list-name {
-  color: var(--text);
+  color: #000000;
 }
 
 .stripe__list-meta {
-  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
 }
 
 .stripe__list a:hover,
@@ -475,16 +442,24 @@ button {
   opacity: 1;
 }
 
-.stripe__nav:hover .stripe__list,
-.stripe__nav:focus-within .stripe__list,
-.stripe__nav.is-open .stripe__list {
-  display: flex;
+html.is-nav-open {
+  overflow: hidden;
 }
 
-.stripe__nav:hover .stripe__current-text,
-.stripe__nav:focus-within .stripe__current-text,
-.stripe__nav.is-open .stripe__current-text {
-  visibility: hidden;
+html.is-nav-open body {
+  overflow: hidden;
+}
+
+html.is-nav-open .stripe {
+  color: #000000;
+  z-index: 400;
+}
+
+html.is-nav-open .stripe__name,
+html.is-nav-open .stripe__menu {
+  position: relative;
+  z-index: 2;
+  color: #000000;
 }
 
 /* ——— About (page bottom) ——— */
@@ -526,12 +501,12 @@ button {
 .site-footer__copy {
   margin: 0;
   width: 100%;
-  font-family: var(--font-index);
+  font-family: var(--font-mono);
   font-weight: 400;
-  font-size: 22px;
+  font-size: 19px;
   line-height: 1.5;
-  letter-spacing: -0.12em;
-  color: var(--text-muted);
+  letter-spacing: 0;
+  color: var(--text);
   text-align: left;
 }
 
@@ -575,12 +550,12 @@ button {
 }
 
 .about-table td {
-  font-family: var(--font-index);
+  font-family: var(--font-mono);
   font-weight: 400;
-  font-size: 22px;
+  font-size: 19px;
   line-height: var(--index-leading);
-  letter-spacing: -0.12em;
-  color: var(--text-muted);
+  letter-spacing: 0;
+  color: var(--text);
 }
 
 .site-footer a {
@@ -995,98 +970,27 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     line-height: 1;
   }
 
-  .stripe__row {
-    align-items: center;
-  }
-
-  .stripe__nav {
-    flex: 0 0 auto;
-    align-items: center;
-  }
-
-  .stripe__current-text {
-    display: none;
-  }
-
   .stripe__menu {
-    display: flex;
     width: 24px;
     height: 15px;
-    padding: 12px;
     margin: -12px -8px -12px 0;
-    box-sizing: content-box;
   }
 
-  .stripe__nav.is-open .stripe__list a {
-    font-size: calc(28px * 2 / 3);
-    line-height: 1.2;
-    text-shadow: none;
+  .stripe__nav.is-open .stripe__menu-bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
   }
 
-  html.is-nav-open {
-    overflow: hidden;
+  .stripe__nav.is-open .stripe__menu-bar:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
   }
 
-  html.is-nav-open body {
-    overflow: hidden;
-  }
-
-  html.is-nav-open .stripe {
-    color: #000000;
-    z-index: 400;
-  }
-
-  html.is-nav-open .stripe__name,
-  html.is-nav-open .stripe__menu {
-    position: relative;
-    z-index: 2;
-    color: #000000;
-  }
-
-  .stripe__nav:hover .stripe__list,
-  .stripe__nav:focus-within .stripe__list {
-    display: none;
-  }
-
-  .stripe__nav:hover .stripe__current-text,
-  .stripe__nav:focus-within .stripe__current-text,
-  .stripe__nav.is-open .stripe__current-text {
-    visibility: visible;
-  }
-
-  .stripe__nav.is-open .stripe__list {
-    display: flex;
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 11px;
-    margin: 0;
+  .stripe__list {
     padding: 72px 20px 40px;
-    background: var(--accent);
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
   }
 
   .stripe__list a {
-    color: #000000;
+    font-size: 22px;
     white-space: normal;
-    text-align: left;
-    opacity: 1;
-  }
-
-  .stripe__list-name {
-    color: #000000;
-  }
-
-  .stripe__list a.is-current .stripe__list-name {
-    opacity: 1;
-  }
-
-  .stripe__list-meta {
-    color: rgba(0, 0, 0, 0.45);
   }
 
   .projects-window {

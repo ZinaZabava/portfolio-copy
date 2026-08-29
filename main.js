@@ -124,7 +124,6 @@
   const projects = Array.from(
     document.querySelectorAll(".project:not([hidden])")
   );
-  const stripeProject = document.getElementById("stripe-project");
   const about = document.getElementById("about");
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
@@ -144,13 +143,6 @@
   }
 
   syncScrollMode();
-
-  const labels = Object.fromEntries(
-    projects.map((section) => [
-      section.dataset.project,
-      section.dataset.label || section.dataset.project,
-    ])
-  );
 
   const state = projects.map((section) => {
     const pin = section.querySelector(".project__pin");
@@ -287,12 +279,6 @@
       }
     }
 
-    if (stripeProject) {
-      const label =
-        stripeProject.querySelector(".stripe__current-label") || stripeProject;
-      label.textContent =
-        activeId === "about" ? "About" : activeId ? labels[activeId] || "" : "";
-    }
     document.querySelectorAll("#stripe-projects a[data-project]").forEach((link) => {
       link.classList.toggle("is-current", link.dataset.project === activeId);
     });
@@ -338,22 +324,15 @@
   const stripeNav = document.getElementById("stripe-nav");
   const stripeList = document.getElementById("stripe-projects");
   const stripeMenu = document.getElementById("stripe-menu");
-  const hoverNav = window.matchMedia("(hover: hover) and (pointer: fine)");
-
-  function isOverlayNav() {
-    return narrowMq.matches || coarseMq.matches;
-  }
 
   const setNavOpen = (open) => {
     if (!stripeNav) return;
     stripeNav.classList.toggle("is-open", open);
-    document.documentElement.classList.toggle(
-      "is-nav-open",
-      open && isOverlayNav()
-    );
-    const expanded = open ? "true" : "false";
-    if (stripeProject) stripeProject.setAttribute("aria-expanded", expanded);
-    if (stripeMenu) stripeMenu.setAttribute("aria-expanded", expanded);
+    document.documentElement.classList.toggle("is-nav-open", open);
+    if (stripeMenu) {
+      stripeMenu.setAttribute("aria-expanded", open ? "true" : "false");
+      stripeMenu.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    }
   };
 
   if (stripeAbout) {
@@ -412,28 +391,16 @@
     if (stripeMenu) {
       stripeMenu.addEventListener("click", (event) => {
         event.preventDefault();
-        if (!isOverlayNav()) return;
         setNavOpen(!stripeNav.classList.contains("is-open"));
       });
     }
 
-    if (stripeProject) {
-      stripeProject.addEventListener("click", (event) => {
-        event.preventDefault();
-      });
-    }
-
-    if (hoverNav.matches && !isOverlayNav()) {
-      stripeNav.addEventListener("mouseenter", () => setNavOpen(true));
-      stripeNav.addEventListener("mouseleave", () => setNavOpen(false));
-    } else {
-      document.addEventListener("click", (event) => {
-        if (!stripeNav.contains(event.target)) setNavOpen(false);
-      });
-      stripeList.addEventListener("click", (event) => {
-        if (event.target === stripeList) setNavOpen(false);
-      });
-    }
+    document.addEventListener("click", (event) => {
+      if (!stripeNav.contains(event.target)) setNavOpen(false);
+    });
+    stripeList.addEventListener("click", (event) => {
+      if (event.target === stripeList) setNavOpen(false);
+    });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") setNavOpen(false);
