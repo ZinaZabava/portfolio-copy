@@ -251,11 +251,31 @@
         );
         item.pin.style.filter =
           cover > 0 ? `blur(${(cover * 12).toFixed(2)}px)` : "";
+
+        const pinTop = item.pin.getBoundingClientRect().top - offset;
+        const arrive = Math.min(1, Math.max(0, pinTop / vh));
+        const radius = `${(arrive * 18).toFixed(2)}px`;
+        item.pin.style.borderTopLeftRadius = radius;
+        item.pin.style.borderTopRightRadius = radius;
       });
+      if (about) {
+        const aboutTop = about.getBoundingClientRect().top - offset;
+        const arrive = Math.min(1, Math.max(0, aboutTop / vh));
+        const radius = `${(arrive * 18).toFixed(2)}px`;
+        about.style.borderTopLeftRadius = radius;
+        about.style.borderTopRightRadius = radius;
+      }
     } else {
       state.forEach((item) => {
-        if (item.pin) item.pin.style.filter = "";
+        if (!item.pin) return;
+        item.pin.style.filter = "";
+        item.pin.style.borderTopLeftRadius = "";
+        item.pin.style.borderTopRightRadius = "";
       });
+      if (about) {
+        about.style.borderTopLeftRadius = "";
+        about.style.borderTopRightRadius = "";
+      }
     }
 
     // Before the first project reaches the focus line, highlight nothing yet
