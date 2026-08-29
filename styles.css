@@ -712,7 +712,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   padding-top: max(var(--intro-pad-y), var(--stripe-height));
   padding-bottom: var(--intro-pad-y);
   padding-left: 36px;
-  padding-right: 24px;
+  padding-right: 48px;
   background: transparent;
   color: var(--text);
 }
@@ -730,7 +730,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
     padding-top: calc((100dvh - var(--topbar-height)) / 3);
     padding-bottom: 36px;
     padding-left: 36px;
-    padding-right: 24px;
+    padding-right: 48px;
   }
 
   .about-table {
