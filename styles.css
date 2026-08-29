@@ -815,8 +815,8 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   max-width: 100%;
   margin-top: auto;
   font-family: var(--font-mono);
-  font-weight: var(--mono-weight);
-  font-size: var(--mono-size);
+  font-weight: 400;
+  font-size: 14px;
   line-height: var(--index-leading);
   letter-spacing: 0;
   text-transform: uppercase;
