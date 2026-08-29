@@ -194,7 +194,9 @@
 
       const contentHeight = item.track.scrollHeight;
       item.scrollRange = Math.max(0, contentHeight - vh);
-      item.section.style.height = `${vh + item.scrollRange + 1}px`;
+      // Extra viewport lets the next project slide up and cover this one
+      // while the pin stays stuck (paired with a negative margin on the next).
+      item.section.style.height = `${item.scrollRange + 2 * vh}px`;
     });
 
     update();
@@ -216,7 +218,6 @@
   }
 
   function update() {
-    const vh = viewportHeight();
     const topbar = parseFloat(
       getComputedStyle(document.documentElement).getPropertyValue(
         "--topbar-height"
@@ -244,22 +245,7 @@
       }
     });
 
-    if (pinned) {
-      state.forEach((item, i) => {
-        if (!item.pin) return;
-        const next = state[i + 1];
-        const nextTop = next
-          ? next.section.getBoundingClientRect().top
-          : about
-            ? about.getBoundingClientRect().top
-            : Infinity;
-        const cover = Math.min(
-          1,
-          Math.max(0, (vh - (nextTop - offset)) / vh)
-        );
-        item.pin.style.opacity = String(1 - cover);
-      });
-    } else {
+    if (!pinned) {
       state.forEach((item) => {
         if (item.pin) item.pin.style.opacity = "";
       });

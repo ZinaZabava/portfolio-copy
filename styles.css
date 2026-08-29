@@ -494,7 +494,7 @@ button {
   min-height: 100vh;
   min-height: 100dvh;
   padding: var(--intro-pad-y) 0;
-  background: transparent;
+  background: var(--about-bg);
   color: var(--text);
 }
 
@@ -627,6 +627,13 @@ button {
 .project {
   position: relative;
   z-index: var(--z, 1);
+  isolation: isolate;
+}
+
+html.js:not(.is-simple-scroll) .project + .project,
+html.js:not(.is-simple-scroll) .projects-window + .site-footer {
+  margin-top: calc(-100vh + var(--topbar-height));
+  margin-top: calc(-100dvh + var(--topbar-height));
 }
 
 .project__pin {
@@ -654,6 +661,7 @@ html.js:not(.is-simple-scroll) .project__pin {
   transform: translateZ(0);
   grid-template-rows: minmax(0, 1fr);
   align-items: stretch;
+  background: var(--project-bg, var(--about-bg));
 }
 
 html.js:not(.is-simple-scroll) .project__intro,
