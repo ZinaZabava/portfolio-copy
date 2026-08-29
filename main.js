@@ -259,19 +259,12 @@
           1,
           Math.max(0, (vh - (nextTop - offset)) / vh)
         );
-        if (cover > 0) {
-          item.pin.style.opacity = String(1 - cover * 0.4);
-          item.pin.style.filter = `blur(${(cover * 12).toFixed(2)}px)`;
-        } else {
-          item.pin.style.opacity = "";
-          item.pin.style.filter = "";
-        }
+        item.pin.style.filter =
+          cover > 0 ? `blur(${(cover * 12).toFixed(2)}px)` : "";
       });
     } else {
       state.forEach((item) => {
-        if (!item.pin) return;
-        item.pin.style.opacity = "";
-        item.pin.style.filter = "";
+        if (item.pin) item.pin.style.filter = "";
       });
     }
 
