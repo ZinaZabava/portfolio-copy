@@ -102,15 +102,15 @@ html.js .loader {
   position: fixed;
   inset: 0;
   z-index: 999;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  grid-template-rows: auto auto;
-  align-content: center;
-  align-items: start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px 36px;
   font-size: var(--mono-size);
   line-height: var(--index-leading);
-  row-gap: 18px;
-  column-gap: 0;
   background: var(--accent);
   color: var(--text);
 }
@@ -118,32 +118,38 @@ html.js .loader {
 .loader__col {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  flex: 0 0 auto;
   min-width: 0;
-  padding: 0 36px;
-  grid-column: 1;
+  padding: 0;
+}
+
+.loader__col--mark {
+  display: none;
 }
 
 .loader__label,
 .loader__role {
   margin: 0;
-  max-width: 100%;
+  max-width: none;
   font-family: var(--font-mono);
   font-weight: var(--mono-weight);
   font-size: var(--mono-size);
   line-height: var(--index-leading);
   letter-spacing: 0;
-  text-align: left;
+  text-align: center;
   text-transform: uppercase;
-  text-wrap: balance;
+  white-space: nowrap;
   color: var(--text);
 }
 
 .loader__role {
   position: relative;
   overflow: hidden;
-  width: 100%;
+  width: auto;
+  min-width: 12ch;
   min-height: 1.5em;
+  text-align: left;
 }
 
 .loader__role-line {
@@ -152,7 +158,7 @@ html.js .loader {
   margin: 0;
   text-align: left;
   text-transform: uppercase;
-  text-wrap: balance;
+  white-space: nowrap;
   will-change: transform, opacity;
   transition:
     transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
@@ -198,18 +204,8 @@ html.js .loader {
 
 @media (max-width: 900px) {
   html.js .loader {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    justify-items: stretch;
     padding: 24px 16px;
-  }
-
-  .loader__col {
-    padding: 8px 12px;
-  }
-
-  .loader__col--mark {
-    display: none;
+    gap: 12px;
   }
 }
 
