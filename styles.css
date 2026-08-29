@@ -617,8 +617,12 @@ html.is-nav-open .stripe__menu {
   isolation: isolate;
 }
 
-html.js:not(.is-simple-scroll) .project + .project,
-html.js:not(.is-simple-scroll) .projects-window + .site-footer {
+html.js:not(.is-simple-scroll):not(.is-ready) .site-footer {
+  visibility: hidden;
+}
+
+html.js:not(.is-simple-scroll).is-ready .project + .project,
+html.js:not(.is-simple-scroll).is-ready .projects-window + .site-footer {
   margin-top: calc(-100vh + var(--topbar-height));
   margin-top: calc(-100dvh + var(--topbar-height));
 }

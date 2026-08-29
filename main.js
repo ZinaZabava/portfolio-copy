@@ -30,14 +30,11 @@
   function finish() {
     loader.remove();
     root.classList.remove("is-loading");
-    // Project heights were measured behind the loader; re-run now it is gone
+    // Measure in this turn so About cannot overlap the first project
+    // before section heights exist.
     void root.offsetHeight;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        window.scrollTo(0, 0);
-        window.dispatchEvent(new Event("resize"));
-      });
-    });
+    window.scrollTo(0, 0);
+    window.dispatchEvent(new Event("resize"));
   }
 
   let dismissed = false;
@@ -191,6 +188,7 @@
       item.section.style.height = `${item.scrollRange + 2 * vh}px`;
     });
 
+    document.documentElement.classList.add("is-ready");
     update();
   }
 
