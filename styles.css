@@ -107,7 +107,11 @@ html.js .loader {
   grid-template-rows: auto auto;
   align-content: center;
   align-items: start;
-  gap: var(--intro-gap);
+  font-size: var(--mono-size);
+  line-height: var(--index-leading);
+  row-gap: calc(2 * var(--mono-size) * var(--index-leading));
+  row-gap: 2lh;
+  column-gap: 0;
   background: var(--accent);
   color: var(--text);
 }
@@ -196,7 +200,7 @@ html.js .loader {
 @media (max-width: 900px) {
   html.js .loader {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: auto auto;
     justify-items: stretch;
     padding: 24px 16px;
   }
