@@ -200,8 +200,14 @@
           const contentHeight = item.pin.offsetHeight;
           const stickTop = Math.min(0, vh - contentHeight);
           item.pin.style.setProperty("--pin-stick-top", `${stickTop}px`);
-          const aboutGap = item === state[state.length - 1] ? 80 : 0;
-          item.section.style.height = `${contentHeight + vh + aboutGap}px`;
+          // Sit on the last frame, then take a longer pull to cover.
+          const hold = Math.round(vh * 0.85);
+          const coverDist = Math.round(vh * 1.4);
+          document.documentElement.style.setProperty(
+            "--cover-pull",
+            `${coverDist}px`
+          );
+          item.section.style.height = `${contentHeight + hold + coverDist}px`;
         }
         return;
       }
@@ -277,7 +283,7 @@
           Math.max(0, (vh - (nextTop - offset)) / vh)
         );
         item.pin.style.filter =
-          pinned && coverAmt > 0 ? `blur(${(coverAmt * 12).toFixed(2)}px)` : "";
+          coverAmt > 0 ? `blur(${(coverAmt * 12).toFixed(2)}px)` : "";
 
         const pinTop = item.pin.getBoundingClientRect().top - offset;
         item.pin.classList.toggle("is-arriving", pinTop > 1);

@@ -636,8 +636,8 @@ html.js:not(.is-reduced-motion):not(.is-ready) .site-footer {
 
 html.js:not(.is-reduced-motion).is-ready .project + .project,
 html.js:not(.is-reduced-motion).is-ready .projects-window + .site-footer {
-  margin-top: calc(-100vh + var(--topbar-height));
-  margin-top: calc(-100dvh + var(--topbar-height));
+  margin-top: calc(-1 * var(--cover-pull, 100vh) + var(--topbar-height));
+  margin-top: calc(-1 * var(--cover-pull, 100dvh) + var(--topbar-height));
 }
 
 .project__pin {
