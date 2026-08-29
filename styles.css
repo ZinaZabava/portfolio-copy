@@ -36,7 +36,7 @@
   --intro-gap: 59px;
   --mono-weight: 400; /* Forma DJR Mono Regular */
   --mono-light: 300; /* Forma DJR Mono Light */
-  --mono-size: 22px;
+  --mono-size: 18px;
   --name-size: 28px;
   --project-title-size: calc(var(--name-size) * 1.5);
   --stripe-pad-top: 12px;
