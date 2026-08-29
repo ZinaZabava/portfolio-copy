@@ -1166,14 +1166,22 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     margin-top: 80px;
   }
 
+  html.js.is-simple-scroll {
+    overscroll-behavior-y: none;
+  }
+
   .site-footer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: calc(var(--stripe-height) + 24px) 20px 48px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: calc(var(--stripe-height) + 24px) 20px 24px;
     min-height: 100vh;
     min-height: 100dvh;
+    overflow: hidden;
   }
 
   .site-footer__inner {
@@ -1194,7 +1202,13 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   }
 
   .site-footer a.site-footer__up {
-    display: none;
+    display: flex;
+    position: static;
+    align-self: flex-end;
+    margin-top: auto;
+    margin-right: 0;
+    right: auto;
+    bottom: auto;
   }
 }
 

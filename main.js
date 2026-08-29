@@ -331,6 +331,10 @@
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(() => {
+      if (narrowMq.matches && about) {
+        const max = window.scrollY + about.getBoundingClientRect().top;
+        if (window.scrollY > max + 1) window.scrollTo(0, Math.max(0, max));
+      }
       update();
       ticking = false;
     });
