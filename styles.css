@@ -40,6 +40,7 @@
   --name-size: 28px;
   --project-title-size: calc(var(--name-size) * 1.5);
   --stripe-pad-top: 12px;
+  --icon-size: 26px;
 }
 
 *,
@@ -344,11 +345,11 @@ button {
   flex-direction: column;
   justify-content: space-between;
   flex: 0 0 auto;
-  width: 26px;
-  height: 16px;
+  width: var(--icon-size);
+  height: var(--icon-size);
   margin: 0;
-  padding: 12px;
-  box-sizing: content-box;
+  padding: 5px 0;
+  box-sizing: border-box;
   border: 0;
   background: none;
   appearance: none;
@@ -606,13 +607,17 @@ html.js:not(.is-reduced-motion) .site-footer.is-arriving {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: var(--icon-size);
+  height: var(--icon-size);
   margin: 0;
-  padding: 8px;
+  padding: 0;
   color: var(--text);
 }
 
 .site-footer__up svg {
   display: block;
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 
 /* ——— Projects window — stacked cover scroll ——— */
@@ -1029,17 +1034,9 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   }
 
   .stripe__menu {
-    width: 24px;
-    height: 15px;
-    margin: -12px -8px -12px 0;
-  }
-
-  .stripe__nav.is-open .stripe__menu-bar:nth-child(1) {
-    transform: translateY(6.5px) rotate(45deg);
-  }
-
-  .stripe__nav.is-open .stripe__menu-bar:nth-child(3) {
-    transform: translateY(-6.5px) rotate(-45deg);
+    width: var(--icon-size);
+    height: var(--icon-size);
+    margin: 0;
   }
 
   .stripe__list {
