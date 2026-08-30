@@ -66,6 +66,7 @@ body {
   line-height: var(--index-leading);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  text-wrap: pretty;
   /* clip does not make body a scroll container, so Safari can still pin the
      project frames. hidden would compute overflow-y to auto and break that. */
   overflow-x: hidden;
