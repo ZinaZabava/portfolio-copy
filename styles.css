@@ -412,7 +412,7 @@ button {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0 0.84em;
+  gap: 0 0.42em;
   font-family: var(--font-display);
   font-weight: 200;
   font-size: var(--name-size);
