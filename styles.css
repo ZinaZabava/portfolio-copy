@@ -768,7 +768,7 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   }
 
   .stripe__list li {
-    grid-column: 3;
+    grid-column: 2;
     width: 100%;
     min-width: 0;
   }
