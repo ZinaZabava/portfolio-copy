@@ -768,13 +768,14 @@ html.js.is-simple-scroll .media:not(:has(> video)) {
   }
 
   .stripe__list li {
-    grid-column: 2;
+    grid-column: 2 / -1;
     width: 100%;
     min-width: 0;
   }
 
   .stripe__list a {
-    white-space: normal;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
 
   .project__intro {
