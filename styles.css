@@ -485,13 +485,14 @@ html.is-nav-open .stripe__menu {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: auto minmax(0, 1fr);
   column-gap: 36px;
-  row-gap: 1em;
+  row-gap: var(--intro-gap);
   align-items: start;
   align-content: start;
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: calc(var(--stripe-height) + 24px) 36px 36px;
+  padding: calc((100vh - var(--topbar-height)) / 3) 36px 36px;
+  padding: calc((100dvh - var(--topbar-height)) / 3) 36px 36px;
   box-sizing: border-box;
 }
 
@@ -525,12 +526,12 @@ html.is-nav-open .stripe__menu {
 
 .site-footer__copy--next {
   grid-column: 2;
-  grid-row: 1 / 3;
+  grid-row: 2;
 }
 
 .about-table {
   grid-column: 3;
-  grid-row: 1 / 3;
+  grid-row: 2;
   width: 100%;
   min-width: 0;
   border-collapse: collapse;
