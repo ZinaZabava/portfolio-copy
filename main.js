@@ -181,9 +181,10 @@
     if (document.documentElement.classList.contains("is-loading")) return;
     const vh = viewportHeight();
 
-    state.forEach((item) => {
+    state.forEach((item, i) => {
       item.track.style.transform = "";
       item.track.style.paddingBottom = "0px";
+      const isLast = i === state.length - 1;
 
       if (!useCoverScroll()) {
         item.section.style.height = "";
@@ -200,12 +201,11 @@
           const contentHeight = item.pin.offsetHeight;
           const stickTop = Math.min(0, vh - contentHeight);
           item.pin.style.setProperty("--pin-stick-top", `${stickTop}px`);
-          // Sit on the last frame, then take a longer pull to cover.
-          const hold = Math.round(vh * 0.85);
-          const coverDist = Math.round(vh * 1.4);
+          const hold = isLast ? 0 : Math.round(vh * 0.85);
+          const coverDist = isLast ? 0 : Math.round(vh * 1.4);
           document.documentElement.style.setProperty(
             "--cover-pull",
-            `${coverDist}px`
+            `${coverDist || Math.round(vh * 1.4)}px`
           );
           item.section.style.height = `${contentHeight + hold + coverDist}px`;
         }
@@ -218,7 +218,7 @@
       const contentHeight = item.track.scrollHeight;
       const viewH = item.track.clientHeight || vh;
       item.scrollRange = Math.max(0, contentHeight - viewH);
-      item.section.style.height = `${item.scrollRange + 2 * vh}px`;
+      item.section.style.height = `${item.scrollRange + (isLast ? 1 : 2) * vh}px`;
     });
 
     document.documentElement.classList.add("is-ready");
@@ -276,9 +276,7 @@
         const next = state[i + 1];
         const nextTop = next
           ? next.section.getBoundingClientRect().top
-          : about
-            ? about.getBoundingClientRect().top
-            : Infinity;
+          : Infinity;
         const coverAmt = Math.min(
           1,
           Math.max(0, (vh - (nextTop - offset)) / vh)
@@ -289,9 +287,11 @@
         const pinTop = item.pin.getBoundingClientRect().top - offset;
         item.pin.classList.toggle("is-arriving", pinTop > 1);
       });
-      if (about) {
-        const aboutTop = about.getBoundingClientRect().top - offset;
-        about.classList.toggle("is-arriving", aboutTop > 1);
+      if (about && state[0]) {
+        const firstTop = state[0].section.getBoundingClientRect().top - offset;
+        const coverAmt = Math.min(1, Math.max(0, (vh - firstTop) / vh));
+        about.style.filter =
+          coverAmt > 0 ? `blur(${(coverAmt * 12).toFixed(2)}px)` : "";
       }
     } else {
       state.forEach((item) => {
@@ -299,7 +299,7 @@
         item.pin.style.filter = "";
         item.pin.classList.remove("is-arriving");
       });
-      if (about) about.classList.remove("is-arriving");
+      if (about) about.style.filter = "";
     }
 
     // Before the first project reaches the focus line, highlight nothing yet
@@ -315,8 +315,11 @@
     }
 
     if (about) {
-      const aboutRect = about.getBoundingClientRect();
-      if (aboutRect.top <= focusY) {
+      const first = state[0];
+      const firstTop = first
+        ? first.section.getBoundingClientRect().top
+        : Infinity;
+      if (firstTop > focusY) {
         activeId = "about";
       }
     }
@@ -331,10 +334,6 @@
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(() => {
-      if (narrowMq.matches && about) {
-        const max = window.scrollY + about.getBoundingClientRect().top;
-        if (window.scrollY > max + 1) window.scrollTo(0, Math.max(0, max));
-      }
       update();
       ticking = false;
     });
@@ -358,12 +357,7 @@
   }
 
   function goToAbout() {
-    if (!about) return;
-    const top = window.scrollY + about.getBoundingClientRect().top;
-    window.scrollTo({
-      top,
-      behavior: reducedMotion ? "auto" : "smooth",
-    });
+    goToTop();
   }
 
   const stripeAbout = document.getElementById("stripe-about");
@@ -393,6 +387,24 @@
   }
 
   if (stripeNav && stripeList) {
+    if (about) {
+      const item = document.createElement("li");
+      const link = document.createElement("a");
+      const name = document.createElement("span");
+      link.href = "#about";
+      link.dataset.project = "about";
+      name.className = "stripe__list-name";
+      name.textContent = "About";
+      link.append(name);
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        setNavOpen(false);
+        requestAnimationFrame(() => goToAbout());
+      });
+      item.appendChild(link);
+      stripeList.appendChild(item);
+    }
+
     projects.forEach((section) => {
       const item = document.createElement("li");
       const link = document.createElement("a");
@@ -415,24 +427,6 @@
       item.appendChild(link);
       stripeList.appendChild(item);
     });
-
-    if (about) {
-      const item = document.createElement("li");
-      const link = document.createElement("a");
-      const name = document.createElement("span");
-      link.href = "#about";
-      link.dataset.project = "about";
-      name.className = "stripe__list-name";
-      name.textContent = "About";
-      link.append(name);
-      link.addEventListener("click", (event) => {
-        event.preventDefault();
-        setNavOpen(false);
-        requestAnimationFrame(() => goToAbout());
-      });
-      item.appendChild(link);
-      stripeList.appendChild(item);
-    }
 
     if (stripeMenu) {
       stripeMenu.addEventListener("click", (event) => {

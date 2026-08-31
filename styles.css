@@ -466,47 +466,31 @@ html.is-nav-open .stripe__menu {
   color: #000000;
 }
 
-/* ——— About (page bottom) ——— */
+/* ——— About (opens the page) ——— */
 .site-footer {
   position: relative;
-  z-index: 50;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
-  justify-items: center;
-  align-items: center;
+  z-index: 0;
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: 0 36px;
+  padding: 0;
   box-sizing: border-box;
   background: var(--about-bg);
   color: var(--text);
   overflow: hidden;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-html.js:not(.is-reduced-motion) .site-footer {
-  transition:
-    border-top-left-radius 0.55s ease,
-    border-top-right-radius 0.55s ease;
-}
-
-html.js:not(.is-reduced-motion) .site-footer.is-arriving {
-  border-top-left-radius: 36px;
-  border-top-right-radius: 36px;
-  transition: none;
 }
 
 .site-footer__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  grid-row: 2;
-  gap: var(--intro-gap);
-  width: 33.333%;
-  max-width: 100%;
-  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 36px;
+  align-items: start;
+  align-content: start;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: calc((100vh) / 3) 36px 36px;
+  padding: calc((100dvh) / 3) 36px 36px;
   box-sizing: border-box;
 }
 
@@ -517,12 +501,13 @@ html.js:not(.is-reduced-motion) .site-footer.is-arriving {
   font-size: var(--project-title-size);
   line-height: 1;
   letter-spacing: 0;
-  text-align: center;
+  text-align: left;
   color: var(--text);
 }
 
 .site-footer__copy {
   margin: 0;
+  min-width: 0;
   width: 100%;
   font-family: var(--font-mono);
   font-weight: 400;
@@ -543,6 +528,7 @@ html.js:not(.is-reduced-motion) .site-footer.is-arriving {
 
 .about-table {
   width: 100%;
+  min-width: 0;
   border-collapse: collapse;
   margin: 0;
 }
@@ -581,13 +567,15 @@ html.js:not(.is-reduced-motion) .site-footer.is-arriving {
   color: var(--text);
 }
 
-.site-footer a {
+.site-footer a,
+a.site-footer__up {
   color: inherit;
   text-decoration: none;
   transition: opacity 160ms ease;
 }
 
-.site-footer a:hover {
+.site-footer a:hover,
+a.site-footer__up:hover {
   opacity: 0.65;
 }
 
@@ -601,16 +589,13 @@ html.js:not(.is-reduced-motion) .site-footer.is-arriving {
   margin-left: 0.75em;
 }
 
-.site-footer a.site-footer__up {
-  position: absolute;
-  right: 36px;
-  bottom: 36px;
+a.site-footer__up {
   display: flex;
   align-items: center;
   justify-content: center;
   width: var(--icon-size);
   height: var(--icon-size);
-  margin: 0;
+  margin: 36px 36px 36px auto;
   padding: 0;
   color: var(--text);
 }
@@ -626,6 +611,7 @@ html.js:not(.is-reduced-motion) .site-footer.is-arriving {
   margin-inline: auto;
   padding-top: var(--topbar-height);
   position: relative;
+  z-index: 1;
   width: 100%;
   isolation: isolate;
 }
@@ -636,12 +622,28 @@ html.js:not(.is-reduced-motion) .site-footer.is-arriving {
   isolation: isolate;
 }
 
-html.js:not(.is-reduced-motion):not(.is-ready) .site-footer {
-  visibility: hidden;
+html.js:not(.is-simple-scroll) .site-footer {
+  height: 200vh;
+  height: 200dvh;
+  min-height: 0;
 }
 
-html.js:not(.is-reduced-motion).is-ready .project + .project,
-html.js:not(.is-reduced-motion).is-ready .projects-window + .site-footer {
+html.js:not(.is-simple-scroll) .site-footer__inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: auto;
+}
+
+html.js:not(.is-simple-scroll).is-ready .project + .project,
+html.js:not(.is-simple-scroll).is-ready .site-footer + .projects-window {
+  margin-top: calc(-1 * var(--cover-pull, 100vh) + var(--topbar-height));
+  margin-top: calc(-1 * var(--cover-pull, 100dvh) + var(--topbar-height));
+}
+
+html.js.is-simple-scroll:not(.is-reduced-motion).is-ready .project + .project {
   margin-top: calc(-1 * var(--cover-pull, 100vh) + var(--topbar-height));
   margin-top: calc(-1 * var(--cover-pull, 100dvh) + var(--topbar-height));
 }
@@ -1163,7 +1165,7 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   }
 
   html.js.is-reduced-motion .project + .project,
-  html.js.is-reduced-motion .projects-window + .site-footer {
+  html.js.is-reduced-motion .site-footer + .projects-window {
     margin-top: 80px;
   }
 
@@ -1172,22 +1174,24 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
   }
 
   .site-footer {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .site-footer__inner {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    padding: calc(var(--stripe-height) + 24px) 20px 24px;
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow: hidden;
-  }
-
-  .site-footer__inner {
+    position: relative;
+    top: auto;
+    gap: var(--intro-gap);
     width: 100%;
-    grid-row: auto;
+    height: auto;
+    min-height: 0;
+    padding: calc(var(--stripe-height) + 24px) 20px 40px;
+    overflow: visible;
   }
 
   .site-footer__title {
@@ -1202,14 +1206,8 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     width: 34%;
   }
 
-  .site-footer a.site-footer__up {
-    display: flex;
-    position: static;
-    align-self: flex-end;
-    margin-top: auto;
-    margin-right: 0;
-    right: auto;
-    bottom: auto;
+  a.site-footer__up {
+    margin: 24px 20px 24px auto;
   }
 }
 
@@ -1227,16 +1225,19 @@ html.js:not(.is-simple-scroll) .media video.is-ready {
     padding-right: 16px;
   }
 
-  .project__intro,
-  html.js.is-simple-scroll .projects-window > .project:first-child .project__intro {
+  .project__intro {
     padding-top: calc(var(--stripe-height) + 16px);
     padding-left: 16px;
     padding-right: 16px;
   }
 
-  .site-footer {
+  .site-footer__inner {
     padding-left: 16px;
     padding-right: 16px;
+  }
+
+  a.site-footer__up {
+    margin-right: 16px;
   }
 }
 
