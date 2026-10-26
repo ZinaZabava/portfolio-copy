@@ -785,10 +785,15 @@
 
   media.forEach((el) => {
     if (el.tagName === "IMG") {
-      if (el.complete && el.naturalWidth > 0) markReady(el);
-      else {
-        el.addEventListener("load", () => markReady(el));
-        el.addEventListener("error", () => markReady(el));
+      const done = () => markReady(el);
+      el.addEventListener("load", done, { once: true });
+      el.addEventListener("error", done, { once: true });
+      if (el.complete) {
+        if (el.naturalWidth > 0) done();
+        else if (typeof el.decode === "function") el.decode().then(done).catch(done);
+        else done();
+      } else if (typeof el.decode === "function") {
+        el.decode().then(done).catch(() => {});
       }
     } else {
       if (el.readyState >= 2) markReady(el);
